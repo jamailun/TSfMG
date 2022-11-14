@@ -4,19 +4,36 @@ using UnityEngine;
 public class PlayerEntity : ManaOwnerEntity {
 
 	[Header("Player config")]
+	[SerializeField] private bool _isMale = true;
 	[SerializeField] private Transform spellSource;
+
+	public TMPro.TMP_Text DEBUG_text;
 
 	[Header("Player spells")]
 	[SerializeField] private SpellData spell_1;
 	[SerializeField] private SpellData spell_2;
 	[SerializeField] private SpellData spell_3;
 
+	// Data structures
 	private readonly SpellsSet spells = new();
+	private readonly StatisticsSet stats = new();
+	private PlayerEquipment equipment;
+
+	// References
 	private TarodevController.PlayerController _controller;
+
+	// External hooks
 	public bool IsFlipX => SpriteRenderer.flipX;
+	public bool IsMale => _isMale;
+
 
 	private void Start() {
 		_controller = GetComponent<TarodevController.PlayerController>();
+		// equipment
+		equipment = new(this);
+		equipment.onEquipmentChange += () => {
+			stats.RecalculateStuff(equipment.GetStuffData());
+		};
 		// init spells
 		UpdateSpellDatas();
 	}
@@ -30,6 +47,15 @@ public class PlayerEntity : ManaOwnerEntity {
 	private void Update() {
 		// update cooldown of spells
 		spells.UpdateTime();
+
+		if(Input.GetKeyDown(KeyCode.D)) {
+			DEBUG_text.text = "Stats=\n" +
+			"- health =" + stats[StatisticType.HealthMax] + "\n" +
+			"- mana =" + stats[StatisticType.ManaMax] + "\n" +
+			"- power =" + stats[StatisticType.ManaPower] + "\n" +
+			"- optim =" + stats[StatisticType.ManaOptimisation] + "\n"
+			;
+		}
 	}
 
 	public override EntityType EntityType => EntityType.Player;

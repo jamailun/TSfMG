@@ -1,0 +1,22 @@
+{
+	"fr": {
+		"male": [
+			"Michel", "Daniel", "Léo", "Gabriel", "Raphaël", "Benoït", "Loïc", "Owen", "Louis", "Nathan", "Thomas", "Olivier", "Bruno", "Paul", "Jacques", "Fred", "Martin", "Georges", "Marc", "Claude", "Jean", "Denis",
+			"Edouard", "Emmanuel", "Émile", "Fabrice", "Gauthier", "Alexandre", "Axel", "Lucien", "Pascal", "Stéphane", "Simon", "Tristan", "Xavier", "Victor", "Romain", "Luc", "Baptiste", "Guy", "Adam"
+		],
+		"female": [
+			"Alice", "Lucie", "Marie", "Appoline", "Magalie", "Julie", "Léa", "Ambre", "Adèle", "Agathe", "Amélie", "Aurélie", "Berenger", "Béatrice", "Bénédicte", "Anne", "Laurence", "Camille", "Florence", "Marguerite",
+			"Hélène", "Jasmine", "Lise", "Marianne", "Murielle", "Nathalie", "Ophélie", "Rose", "Sylvie", "Victoire", "Eve", "Marion"
+		]
+	},
+	"en": {
+		"male": [
+			"Oliver", "John", "George", "Arthur", "Leo", "Harry", "Oscar", "Archie", "Henry", "Theodore", "Freddie", "Jack", "Charlie", "Theo", "Jacob", "Thomas", "William", "Lucas", "Tom", "Isaac", "Alexander",
+			"Mason", "Sebastian", "Max", "Rory", "Jude", "Benjamin", "Ethan", "Adam", "Harrison", "Louis", "Hunter", "David", "Felix", "Caleb", "Blake", "Otis", "Liam"
+		],
+		"female": [
+			"Eve", "Amelia", "Olivia", "Ava", "Ivy", "Isabella", "Hannah", "Florence", "Sophia", "Evelyn", "Phoebe", "Charlotte", "Harper", "Luna", "Penelope", "Bonnie", "Violet", "Arabella", "Eleanor", "Scarlett",
+			"Nancy", "Jasmine", "Beatrice", "Dorothea", "Caroline", "Adelaide", "Victoria", "Elizabeth"
+		]
+	}
+}

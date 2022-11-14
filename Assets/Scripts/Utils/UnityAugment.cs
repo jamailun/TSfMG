@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UnityAugment {
@@ -7,7 +8,8 @@ public static class UnityAugment {
 	}
 
 	public static void DestroyChildren(this Transform transform) {
-		foreach(Transform child in transform) {
+		var tempList = transform.Cast<Transform>().ToList();
+		foreach(Transform child in tempList) {
 			GameObject.Destroy(child.gameObject);
 		}
 	}

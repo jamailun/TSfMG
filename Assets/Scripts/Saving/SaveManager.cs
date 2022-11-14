@@ -8,6 +8,8 @@ public class SaveManager : MonoBehaviour {
 	public string FilePath => Path.Combine(Application.persistentDataPath, _fileName);
 	public GlobalSaveState SavedData => _saveState;
 
+	public static long NOW => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
 	[SerializeField] private string _fileName = "save.json";
 	[SerializeField] private GlobalSaveState _saveState;
 
@@ -21,13 +23,16 @@ public class SaveManager : MonoBehaviour {
 	}
 
 	public static GlobalSaveState CreateDefaultSaveState() {
-		long now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+		long now = NOW;
 		return new GlobalSaveState() {
 			timeCreated = now,
 			timeLastOpened = now,
 			id = 1,
-			generationNumber = 0, // to start the tutorial I guess
-			generationName = "nop"
+			family = new FamilyState() {
+				id = 1,
+				generation = 0, // to start the tutorial I guess
+				name = "undef"
+			}
 		};
 	}
 
@@ -41,11 +46,11 @@ public class SaveManager : MonoBehaviour {
 		}
 	}
 
-	public void LoadFromFile() {
+	public GlobalSaveState LoadFromFile() {
 		if(!File.Exists(FilePath)) {
 			Debug.Log("No save data has been found at [" + FilePath + "]. Generating data.");
 			_saveState = CreateDefaultSaveState();
-			return;
+			return _saveState;
 		}
 		try {
 			string json = File.ReadAllText(FilePath, System.Text.Encoding.UTF8);
@@ -55,6 +60,7 @@ public class SaveManager : MonoBehaviour {
 			Debug.LogError("Error occured (" + e.Message + "). Could not load data. Creating default data.");
 			_saveState = CreateDefaultSaveState();
 		}
+		return _saveState;
 	}
 	
 }

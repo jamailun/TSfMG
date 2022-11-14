@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public struct GlobalSaveState {
 
 	public int id;
@@ -10,8 +7,6 @@ public struct GlobalSaveState {
 	public long timeCreated;
 	public long timeLastOpened;
 
-	public int generationNumber;
-	public string generationName;
-	public CharacterState[] generationCharacters;
+	public FamilyState family;
 
 }
