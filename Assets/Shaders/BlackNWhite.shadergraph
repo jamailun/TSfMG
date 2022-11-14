@@ -144,7 +144,7 @@
                 "m_Node": {
                     "m_Id": "78f1dfa1bb924dddb00e3efe197ccea3"
                 },
-                "m_SlotId": 5
+                "m_SlotId": 4
             },
             "m_InputSlot": {
                 "m_Node": {
@@ -198,8 +198,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 1591.0,
-            "y": -21.999998092651368
+            "x": 1262.0001220703125,
+            "y": -138.99998474121095
         },
         "m_Blocks": [
             {
@@ -215,8 +215,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 1329.0,
-            "y": 158.99998474121095
+            "x": 1262.0001220703125,
+            "y": 77.0
         },
         "m_Blocks": [
             {
@@ -1073,7 +1073,7 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "MainTexture",
     "m_DefaultReferenceName": "_MainTexture",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_MainTex",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
