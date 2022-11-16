@@ -21,7 +21,7 @@ public class FamilyManagerUI : MonoBehaviour {
 	// Called by the FamilyManager instance
 	public void InitializeDisplay(FamilyManager familyManager) {
 		this._familyManager = familyManager;
-		familyName_label.text = familyManager.FamilyName + ", page "+characterPage+"/"+MaxPage;
+		familyName_label.text = familyManager.FamilyName;
 
 		RefreshCharactersDisplays();
 	}
