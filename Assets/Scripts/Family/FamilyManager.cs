@@ -11,9 +11,10 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 	private LanguageNames allowedNames;
 
 	// Familty data
-	private string _familyName;
-	private int _familyGeneration;
+	public string FamilyName { get; private set; }
+	public int FamilyGeneration { get; private set; }
 	private List<Character> _characters;
+	public List<Character> FamilyCharacters => new(_characters);
 
 	private TextAsset NamesAsset => Resources.Load<TextAsset>(_fileNamesPath);
 
@@ -34,17 +35,18 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 		if(state.generation == 0) {
 			_characters = new();
 			_characters.Add(new Character(CharacterState.Generate(allowedNames, true, 25f)));
+			Debug.Log("char = " + _characters[0].ToString());
 			Debug.Log("generation == 0. Tutorial detected.");
 			//TODO: truc pour le tutoriel ??? i guess xd
-			_familyGeneration = 1;
+			FamilyGeneration = 1;
 		} else {
 			_characters = new List<CharacterState>(state.characters).Select(c => new Character(c)).ToList();
-			_familyGeneration = state.generation;
+			FamilyGeneration = state.generation;
 		}
-		_familyName = state.name;
+		FamilyName = state.name;
 
 		// Display data
-		ui_handler.Display(state);
+		ui_handler.InitializeDisplay(this);
 	}
 
 	public void RunOver(float yearsElapsed) {
@@ -62,8 +64,8 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 
 	public FamilyState Serialize() {
 		return new() {
-			name = _familyName,
-			generation = _familyGeneration,
+			name = FamilyName,
+			generation = FamilyGeneration,
 			characters = _characters.FindAll(c => !c.IsDead).Select(c => c.Serialize()).ToArray()
 			//TODO ajouter des trucs pour la suite
 		};

@@ -1,30 +1,41 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public struct NamesFile {
 	public LanguageNames fr;
 	public LanguageNames en;
 
 	public LanguageNames Get(Language lang) {
-		LanguageNames names = lang switch {
+		return lang switch {
 			Language.FR => fr,
 			_ => en
 		};
-		return names;
+	}
+	public override string ToString() {
+		return "NamesFile{fr=" + fr + ",\n en=" + en + "\n}";
 	}
 }
 
+[System.Serializable]
 public struct LanguageNames {
 	public string[] male;
 	public string[] female;
 
 	public string Random(bool isMale) {
 		string[] names = isMale ? male : female;
-		if(names == null)
+		if(names == null) {
+			Debug.LogError("Carefull, null array in " + ToString());
 			return "error";
+		}
 		return names[UnityEngine.Random.Range(0, names.Length)];
+	}
+
+	public override string ToString() {
+		return "LanguageName{male=" + male?.NiceString() + ", female=" + female?.NiceString() + "}";
 	}
 }
 
+[System.Serializable]
 public enum Language {
 	FR,
 	EN

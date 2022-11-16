@@ -35,5 +35,9 @@ public class Character : IStateSerializable<CharacterState> {
 		};
 	}
 
+	public override string ToString() {
+		return "Character{name="+Name+", male="+IsMale+", age="+Age+(IsDead?", DEAD":"")+"}";
+	}
+
 
 }

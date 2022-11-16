@@ -26,7 +26,7 @@ public class StatisticsSet {
 
 	private void RecalculateBuffer() {
 		_completeBuffer.Clear();
-		foreach(StatisticType type in System.Enum.GetValues(typeof(StatisticEntry))) {
+		foreach(StatisticType type in System.Enum.GetValues(typeof(StatisticType))) {
 			_completeBuffer.Add(type,
 					(_stuff_flat.TryGet(type, 0) /* + other flats*/) * (_stuff_mult.TryGet(type, 1f)/* + other mults*/)
 			);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Text;
 
 public static class UnityAugment {
 	public static Vector2 Get2dPos(this Transform tr) {
@@ -23,6 +24,16 @@ public static class UnityAugment {
 			list[n] = value;
 		}
 		return list;
+	}
+
+	public static List<T> Slice<T>(this List<T> list, int index, int count) {
+		int index_max = list.Count - 1;
+		if(index + count > index_max) {
+			int ncount = index_max - index + 1;
+			Debug.Log("(" + index + " +" + count + ") -> FIX en '+" + ncount + ".");
+			return list.GetRange(index, ncount);
+		}
+		return list.GetRange(index, count);
 	}
 
 	public static T GetRandom<T>(this IList<T> list) {
@@ -60,5 +71,26 @@ public static class UnityAugment {
 	public static void AddRange<T>(this ISet<T> set, IEnumerable<T> elements) {
 		foreach(var elem in elements)
 			set.Add(elem);
+	}
+
+	public static string NiceString<T>(this T[] array) {
+		if(array == null)
+			return "null";
+		StringBuilder sb = new("[");
+		for(int i = 0; i < array.Length; i++) {
+			if(i > 0)
+				sb.Append(", ");
+			sb.Append(array[i]);
+		}
+		return sb.Append("]").ToString();
+	}
+	public static string NiceString<T>(this IList<T> list) {
+		StringBuilder sb = new("[");
+		for(int i = 0; i < list.Count; i++) {
+			if(i > 0)
+				sb.Append(", ");
+			sb.Append(list[i]);
+		}
+		return sb.Append("]").ToString();
 	}
 }
