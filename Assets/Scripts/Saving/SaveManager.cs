@@ -29,9 +29,9 @@ public class SaveManager : MonoBehaviour {
 			timeLastOpened = now,
 			id = 1,
 			family = new FamilyState() {
-				id = 1,
 				generation = 0, // to start the tutorial I guess
-				name = "undef"
+				name = "undef",
+				characters = new CharacterState[0]
 			}
 		};
 	}

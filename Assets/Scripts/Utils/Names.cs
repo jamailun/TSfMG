@@ -31,14 +31,12 @@ public enum Language {
 }
 
 public static class NamesLoader {
-	public const string namesPath = "Lang/names.json";
-	public static LanguageNames Load(Language lang) {
+	public static LanguageNames Load(TextAsset asset, Language lang) {
 		try {
-			TextAsset asset = Resources.Load<TextAsset>(namesPath);
 			NamesFile all = JsonUtility.FromJson<NamesFile>(asset.text);
 			return all.Get(lang);
 		} catch(System.Exception e) {
-			Debug.LogError("Could not read names files () : " + e.Message);
+			Debug.LogError("Could not read names file ("+asset+") : " + e.Message);
 			return new LanguageNames();
 		}
 	}

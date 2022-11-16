@@ -1,10 +1,12 @@
 ﻿[System.Serializable]
 public struct FamilyState {
 
-	public int id;
-
-	public int generation;
 	public string name;
+	public int generation;
 	public CharacterState[] characters;
+
+	//TODO: ame qui trainent
+	//TODO: améliorations de famille
+	//TODO: jsp trop
 
 }
