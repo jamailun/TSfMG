@@ -48,6 +48,16 @@ public class TooltipUI : MonoBehaviour {
 			}
 		}
 	}
+	private void UpdateContent(Character character) {
+		// Clean
+		statsContainer.DestroyChildren();
+		// Display
+		mainLabel.text = character.Name;
+		descriptionLabel.text = "";
+		// Curses
+		var line = Instantiate(linePrefab, statsContainer);
+		line.Init("hop malédictions");
+	}
 
 	public static void ShowTooltip(ItemType item) {
 		if(Instance == null) {
@@ -56,6 +66,17 @@ public class TooltipUI : MonoBehaviour {
 		}
 		Instance.gameObject.SetActive(true);
 		Instance.UpdateContent(item);
+		Instance.Update();
+	}
+
+	public static void ShowTooltip(Character character) {
+		if(Instance == null) {
+			Debug.LogWarning("No tooltip set for the scene !");
+			return;
+		}
+		Instance.gameObject.SetActive(true);
+		Instance.UpdateContent(character);
+		Instance.Update();
 	}
 
 	public static void HideTooltip() {

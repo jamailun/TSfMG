@@ -16,4 +16,13 @@ public class StatLineUI : MonoBehaviour {
 		label.color = good ? Color.blue : Color.red;
 	}
 
+	public void Init(string line) {
+		label.text = line;
+		label.color = Color.blue;
+	}
+
+	public void Init(/*Curse curse*/) {
+		
+	}
+
 }

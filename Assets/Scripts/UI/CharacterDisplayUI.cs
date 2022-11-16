@@ -28,4 +28,19 @@ public class CharacterDisplayUI : MonoBehaviour {
 		_parent.SelectedCharacter(currentCharacter);
 	}
 
+
+	private bool mouseOver = false;
+
+	public void MouseEnters() {
+		if(mouseOver || currentCharacter == null)
+			return;
+		mouseOver = true;
+		TooltipUI.ShowTooltip(currentCharacter);
+	}
+
+	public void MouseExits() {
+		mouseOver = false;
+		TooltipUI.HideTooltip();
+	}
+
 }

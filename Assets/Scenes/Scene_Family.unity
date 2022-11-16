@@ -1861,6 +1861,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 413815006}
     m_Modifications:
+    - target: {fileID: 1211866958655084630, guid: d5be154aa0f4a08498b161946be7351e, type: 3}
+      propertyPath: mouseOffset.y
+      value: -40
+      objectReference: {fileID: 0}
     - target: {fileID: 4768914156603359700, guid: d5be154aa0f4a08498b161946be7351e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
