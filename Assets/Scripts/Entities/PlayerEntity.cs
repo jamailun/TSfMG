@@ -30,6 +30,7 @@ public class PlayerEntity : ManaOwnerEntity {
 	public void LinkCharacter(Character character) {
 		if(Character == null) {
 			Character = character;
+			DontDestroyOnLoad(gameObject);
 		} else {
 			Debug.LogError("The Character reference in PlayerEntity should have already been set.");
 		}

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EntryDoor : MonoBehaviour {
 
@@ -7,5 +6,8 @@ public class EntryDoor : MonoBehaviour {
 		var player = Instantiate(playerPrefab);
 		player.transform.position = transform.position;
 	}
-	
+	public void MakesEnter(PlayerEntity playerInstance) {
+		playerInstance.transform.position = transform.position;
+	}
+
 }

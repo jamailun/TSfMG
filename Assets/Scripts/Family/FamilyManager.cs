@@ -46,7 +46,8 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 		FamilyName = state.name;
 
 		// Display data
-		ui_handler.InitializeDisplay(this);
+		if(ui_handler)
+			ui_handler.InitializeDisplay(this);
 	}
 
 	public void RunOver(float yearsElapsed) {

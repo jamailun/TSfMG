@@ -483,9 +483,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 1
-  _sceneMainMenu: MainMenuScene
-  _sceneGame: GameScene
-  _sceneFamily: FamilyScene
+  _sceneMainMenu: Scene_MainMenu
+  _sceneGame: Scene_Game
+  _sceneFamily: Scene_Family
+  _sceneLoading: Scene_Loading
 --- !u!4 &504071349
 Transform:
   m_ObjectHideFlags: 0
@@ -499,7 +500,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &507117980
 GameObject:
@@ -1425,7 +1426,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490394481
 GameObject:
@@ -2083,7 +2084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1988060238}
   m_Layer: 0
-  m_Name: -------------------------
+  m_Name: -------[ DEBUG ]--------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

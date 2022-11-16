@@ -10,15 +10,16 @@ public class GlobalGameManager : MonoBehaviour {
 	public State CurrentState { get; private set; }
 	// time of the GAME, not the application
 	public float Time => save.timePlayed + UnityEngine.Time.time;
+	public bool IsPlaying { get; private set; }
 
 	[Header("Start only")]
 	[SerializeField] private State _startState;
 
 	[Header("Scenes configuration")]
-	[SerializeField] private string _sceneMainMenu = "Scene_MainMenu";
-	[SerializeField] private string _sceneGame = "Scene_Game";
-	[SerializeField] private string _sceneFamily = "Scene_Family";
-	[SerializeField] private string _sceneLoading = "Scene_Loading";
+	[SerializeField] private string _sceneMainMenu_name = "Scene_MainMenu";
+	[SerializeField] private string _sceneGame_name = "Scene_Game";
+	[SerializeField] private string _sceneFamily_name = "Scene_Family";
+	[SerializeField] private string _sceneLoading_name = "Scene_Loading";
 
 	// current run
 	private float runStartedTime;
@@ -28,7 +29,8 @@ public class GlobalGameManager : MonoBehaviour {
 	public enum State {
 		MainMenu,
 		FamilyManagement,
-		InRun
+		InRun,
+		RunOver
 	}
 
 
@@ -39,6 +41,7 @@ public class GlobalGameManager : MonoBehaviour {
 		}
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
+		IsPlaying = true;
 	}
 
 	private void Start() {
@@ -55,7 +58,7 @@ public class GlobalGameManager : MonoBehaviour {
 			Debug.LogError("Cannot start a run if we are not doing familty management. Current state = " + CurrentState);
 			return;
 		}
-		if(character == null) {
+		if(character == null || character.IsDead) {
 			Debug.LogError("Cannot start run with a null or dead character.");
 			return;
 		}
@@ -64,8 +67,15 @@ public class GlobalGameManager : MonoBehaviour {
 		StartCoroutine(_StartRun());
 	}
 
+	public void GoToFamily() {
+		if(CurrentState != State.MainMenu || CurrentState != State.RunOver) {
+			Debug.LogError("Cannot start a run if we are not doing familty management. Current state = " + CurrentState);
+			return;
+		}
+	}
+
 	private IEnumerator _DestroyAndLoad() {
-		var loading = SceneManager.LoadSceneAsync(_sceneLoading);
+		var loading = SceneManager.LoadSceneAsync(_sceneLoading_name);
 		while(!loading.isDone) {
 			yield return null;
 		}
@@ -75,21 +85,35 @@ public class GlobalGameManager : MonoBehaviour {
 		// Destroy everything and put the main scene as loading screen
 		yield return _DestroyAndLoad();
 
-		PlayerEntity player = null;
+
+		//TODO: JE NE SAIS PAS SI CECI FONCTIONNE !!!!
+		PlayerEntity player = FindObjectOfType<PlayerEntity>();
+		Debug.Log("find for player." + (player == null ? " NOT FOUND" : "Found : " + player));
+
+
 
 		// The Application loads the Scene in the background at the same time as the current Scene.
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneGame, LoadSceneMode.Additive);
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneGame_name, LoadSceneMode.Additive);
 		while(!asyncLoad.isDone) {
 			yield return null;
 		}
-		var target = SceneManager.GetSceneByName(_sceneGame);
+		var scene = SceneManager.GetSceneByName(_sceneGame_name);
+		var sceneData = new GameSceneElements(scene);
+		if(!sceneData.IsValid) {
+			Debug.LogError("INVALID scene data for scene " + _sceneGame_name + ".");
+		}
 
-		//TODO do operations in loaded scene
-		// générer le donjon
+		// Generate the donjon
+		sceneData.generator.Clean(false);
+		sceneData.generator.FullGeneration(player);
+
+		//maintenant on laisse le loading
+		Debug.Log("on va laisser un peu l'écran de laoding :)");
+		yield return new WaitForSeconds(3f);
 
 
 		// Unload the previous Scene
-		asyncLoad = SceneManager.UnloadSceneAsync(_sceneLoading);
+		asyncLoad = SceneManager.UnloadSceneAsync(_sceneLoading_name);
 		while(!asyncLoad.isDone) {
 			yield return null;
 		}
@@ -97,6 +121,16 @@ public class GlobalGameManager : MonoBehaviour {
 		// start the game.
 		runStartedTime = UnityEngine.Time.time;
 		player.LinkCharacter(runCharacterRef);
+	}
+
+	public void Pause() {
+		IsPlaying = false;
+		UnityEngine.Time.timeScale = 0f;
+	}
+
+	public void Unpause() {
+		IsPlaying = true;
+		UnityEngine.Time.timeScale = 1f;
 	}
 
 }
