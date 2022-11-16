@@ -30,7 +30,6 @@ public class CharacterDisplayUI : MonoBehaviour {
 
 
 	private bool mouseOver = false;
-
 	public void MouseEnters() {
 		if(mouseOver || currentCharacter == null)
 			return;

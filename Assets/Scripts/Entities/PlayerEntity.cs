@@ -25,7 +25,15 @@ public class PlayerEntity : ManaOwnerEntity {
 	// External hooks
 	public bool IsFlipX => SpriteRenderer.flipX;
 	public bool IsMale => _isMale;
+	public Character Character { get; private set; }
 
+	public void LinkCharacter(Character character) {
+		if(Character == null) {
+			Character = character;
+		} else {
+			Debug.LogError("The Character reference in PlayerEntity should have already been set.");
+		}
+	}
 
 	private void Start() {
 		_controller = GetComponent<TarodevController.PlayerController>();

@@ -56,7 +56,9 @@ public class FamilyManagerUI : MonoBehaviour {
 
 	// Called by children
 	public void SelectedCharacter(Character character) {
-		Debug.Log("TODO start run with " + character);
+		foreach(var btn in GetComponentsInChildren<Button>())
+			btn.interactable = false;
+		_familyManager.UI_SelectedCharacter(character);
 	}
 
 }

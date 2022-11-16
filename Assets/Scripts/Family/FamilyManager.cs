@@ -62,6 +62,11 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 		_characters.RemoveAll(c => c.IsDead);
 	}
 
+	public void UI_SelectedCharacter(Character character) {
+		Debug.Log("The run will start with character " + character);
+		GlobalGameManager.Instance.StartRun(character);
+	}
+
 	public FamilyState Serialize() {
 		return new() {
 			name = FamilyName,

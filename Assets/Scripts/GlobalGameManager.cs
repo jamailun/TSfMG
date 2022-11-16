@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalGameManager : MonoBehaviour {
 		
@@ -12,6 +13,12 @@ public class GlobalGameManager : MonoBehaviour {
 
 	[Header("Start only")]
 	[SerializeField] private State _startState;
+
+	[Header("Scenes configuration")]
+	[SerializeField] private string _sceneMainMenu = "Scene_MainMenu";
+	[SerializeField] private string _sceneGame = "Scene_Game";
+	[SerializeField] private string _sceneFamily = "Scene_Family";
+	[SerializeField] private string _sceneLoading = "Scene_Loading";
 
 	// current run
 	private float runStartedTime;
@@ -57,13 +64,39 @@ public class GlobalGameManager : MonoBehaviour {
 		StartCoroutine(_StartRun());
 	}
 
-	private IEnumerator _StartRun() {
-		// faire un fondu au noir
-		// changer de scène
-		// écran de chargement
+	private IEnumerator _DestroyAndLoad() {
+		var loading = SceneManager.LoadSceneAsync(_sceneLoading);
+		while(!loading.isDone) {
+			yield return null;
+		}
+	}
+
+	private IEnumerator _StartRun(/*PlayerEntity player*/) {
+		// Destroy everything and put the main scene as loading screen
+		yield return _DestroyAndLoad();
+
+		PlayerEntity player = null;
+
+		// The Application loads the Scene in the background at the same time as the current Scene.
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneGame, LoadSceneMode.Additive);
+		while(!asyncLoad.isDone) {
+			yield return null;
+		}
+		var target = SceneManager.GetSceneByName(_sceneGame);
+
+		//TODO do operations in loaded scene
 		// générer le donjon
-		//
-		yield return new WaitForSeconds(0.1f);
+
+
+		// Unload the previous Scene
+		asyncLoad = SceneManager.UnloadSceneAsync(_sceneLoading);
+		while(!asyncLoad.isDone) {
+			yield return null;
+		}
+
+		// start the game.
+		runStartedTime = UnityEngine.Time.time;
+		player.LinkCharacter(runCharacterRef);
 	}
 
 }
