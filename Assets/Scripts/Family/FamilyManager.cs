@@ -35,7 +35,6 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 		if(state.generation == 0) {
 			_characters = new();
 			_characters.Add(new Character(CharacterState.Generate(allowedNames, true, 25f)));
-			Debug.Log("char = " + _characters[0].ToString());
 			Debug.Log("generation == 0. Tutorial detected.");
 			//TODO: truc pour le tutoriel ??? i guess xd
 			FamilyGeneration = 1;

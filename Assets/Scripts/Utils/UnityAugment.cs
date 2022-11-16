@@ -26,12 +26,16 @@ public static class UnityAugment {
 		return list;
 	}
 
+	/// <summary>
+	/// Litterally a better #Range
+	/// </summary>
+	/// <param name="index">The index to START the slice</param>
+	/// <param name="count">The maximum amount of elements to take</param>
+	/// <returns>a list containing between 0 and 'count' elements.</returns>
 	public static List<T> Slice<T>(this List<T> list, int index, int count) {
 		int index_max = list.Count - 1;
 		if(index + count > index_max) {
-			int ncount = index_max - index + 1;
-			Debug.Log("(" + index + " +" + count + ") -> FIX en '+" + ncount + ".");
-			return list.GetRange(index, ncount);
+			return list.GetRange(index, index_max - index + 1);
 		}
 		return list.GetRange(index, count);
 	}

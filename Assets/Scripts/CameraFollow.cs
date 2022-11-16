@@ -23,6 +23,10 @@ public class CameraFollow : MonoBehaviour {
 		Instance = this;
 	}
 
+	private void OnDestroy() {
+		Instance = null;
+	}
+
 	void FixedUpdate() {
 		if(Target == null)
 			return;

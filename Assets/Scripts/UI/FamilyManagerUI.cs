@@ -45,7 +45,6 @@ public class FamilyManagerUI : MonoBehaviour {
 	private void RefreshCharactersDisplays() {
 		charactersLayout.transform.DestroyChildren();
 		var chars = _familyManager.FamilyCharacters.Slice(charactersPerPage * characterPage, charactersPerPage);
-		Debug.Log("refresh (page=" + characterPage + "/" + MaxPage + "). count = " + chars.Count);
 		foreach(var c in chars) {
 			var display = Instantiate(characterUiPrefab, charactersLayout.transform);
 			display.Init(c);

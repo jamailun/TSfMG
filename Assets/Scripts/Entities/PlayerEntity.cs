@@ -32,7 +32,7 @@ public class PlayerEntity : ManaOwnerEntity {
 			Character = character;
 			DontDestroyOnLoad(gameObject);
 		} else {
-			Debug.LogError("The Character reference in PlayerEntity should have already been set.");
+			Debug.LogError("The Character reference in PlayerEntity have already been set.");
 		}
 	}
 

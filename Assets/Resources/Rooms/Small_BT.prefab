@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 2, y: 3}
+  _maximumAmount: 1
   doors:
   - side: 2
     size: 1

@@ -6,6 +6,7 @@ public class EntryDoor : MonoBehaviour {
 		var player = Instantiate(playerPrefab);
 		player.transform.position = transform.position;
 	}
+
 	public void MakesEnter(PlayerEntity playerInstance) {
 		playerInstance.transform.position = transform.position;
 	}

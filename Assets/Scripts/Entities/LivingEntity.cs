@@ -41,6 +41,8 @@ public abstract class LivingEntity : MonoBehaviour {
 
 	protected bool Initialized { get; private set; }
     protected virtual void InitEntity() {
+        if(Initialized)
+            return;
         Initialized = true;
         SetFullHealth();
         if(!_renderer)

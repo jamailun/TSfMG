@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 7, y: 2}
+  _maximumAmount: 1
   doors:
   - side: 0
     size: 1

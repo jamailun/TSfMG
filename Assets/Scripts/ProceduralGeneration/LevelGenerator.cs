@@ -49,7 +49,7 @@ public class LevelGenerator : MonoBehaviour {
 		Debug.Log("acceptable > " + s);
 	}
 
-	public void FullGeneration(PlayerEntity instance = null) {
+	public void FullGeneration() {
 		LoadLibrairy();
 		Clean();
 		int r = 0;
@@ -57,15 +57,19 @@ public class LevelGenerator : MonoBehaviour {
 			r++;
 		}
 		Debug.Log("Generated " + r + " rooms.");
+	}
 
-		if(entryDoor && playerPrefab) {
+	public void SpawnPlayer(PlayerEntity instance = null) {
+		if(entryDoor) {
 			if(instance) {
 				entryDoor.MakesEnter(instance);
 			} else if(playerPrefab) {
 				entryDoor.Spawn(playerPrefab);
+			} else {
+				Debug.LogError("LEVELGENERATOR could not spawn player. No prefab/instance given.");
 			}
 		} else {
-			Debug.LogError("Could not find any entry point.");
+			Debug.LogError("Could not find any entry point...");
 		}
 	}
 

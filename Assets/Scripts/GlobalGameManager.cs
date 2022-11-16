@@ -55,7 +55,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 	public void StartRun(Character character) {
 		if(CurrentState != State.FamilyManagement) {
-			Debug.LogError("Cannot start a run if we are not doing familty management. Current state = " + CurrentState);
+			Debug.LogError("Cannot start a run if we are not doing family management. Current state = " + CurrentState);
 			return;
 		}
 		if(character == null || character.IsDead) {
@@ -69,9 +69,37 @@ public class GlobalGameManager : MonoBehaviour {
 
 	public void GoToFamily() {
 		if(CurrentState != State.MainMenu || CurrentState != State.RunOver) {
-			Debug.LogError("Cannot start a run if we are not doing familty management. Current state = " + CurrentState);
+			Debug.LogError("Cannot go to family a run if we are not at main menu OR after a run. Current state = " + CurrentState);
 			return;
 		}
+
+		// I HOPE I DO NOT FAIT UNE BETISE xd
+		Destroy(GetPlayer());
+
+		SceneManager.LoadScene(_sceneFamily_name);
+	}
+	public void GoToMainMenu() {
+		if(CurrentState == State.MainMenu) {
+			Debug.LogError("Cannot go to main menu from main menu...  Current state = " + CurrentState);
+			return;
+		}
+
+		// I HOPE I DO NOT FAIT UNE BETISE xd
+		Destroy(GetPlayer());
+
+		SceneManager.LoadScene(_sceneMainMenu_name);
+	}
+
+	private bool quitting = false;
+	public void QuitApplication() {
+		if(quitting)
+			return;
+		quitting = true;
+		//TODO: operation on quit : SAVING !!
+	}
+
+	private void OnApplicationQuit() {
+		QuitApplication();
 	}
 
 	private IEnumerator _DestroyAndLoad() {
@@ -81,16 +109,14 @@ public class GlobalGameManager : MonoBehaviour {
 		}
 	}
 
-	private IEnumerator _StartRun(/*PlayerEntity player*/) {
+	public PlayerEntity GetPlayer() {
+		//player should be in DoNotDestroyOnLoad objects
+		return FindObjectOfType<PlayerEntity>();
+	}
+
+	private IEnumerator _StartRun() {
 		// Destroy everything and put the main scene as loading screen
 		yield return _DestroyAndLoad();
-
-
-		//TODO: JE NE SAIS PAS SI CECI FONCTIONNE !!!!
-		PlayerEntity player = FindObjectOfType<PlayerEntity>();
-		Debug.Log("find for player." + (player == null ? " NOT FOUND" : "Found : " + player));
-
-
 
 		// The Application loads the Scene in the background at the same time as the current Scene.
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneGame_name, LoadSceneMode.Additive);
@@ -105,12 +131,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 		// Generate the donjon
 		sceneData.generator.Clean(false);
-		sceneData.generator.FullGeneration(player);
-
-		//maintenant on laisse le loading
-		Debug.Log("on va laisser un peu l'écran de laoding :)");
-		yield return new WaitForSeconds(3f);
-
+		sceneData.generator.FullGeneration();
 
 		// Unload the previous Scene
 		asyncLoad = SceneManager.UnloadSceneAsync(_sceneLoading_name);
@@ -118,9 +139,11 @@ public class GlobalGameManager : MonoBehaviour {
 			yield return null;
 		}
 
+		sceneData.generator.SpawnPlayer(GetPlayer());
+
 		// start the game.
 		runStartedTime = UnityEngine.Time.time;
-		player.LinkCharacter(runCharacterRef);
+		GetPlayer().LinkCharacter(runCharacterRef);
 	}
 
 	public void Pause() {

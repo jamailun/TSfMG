@@ -14,6 +14,7 @@ public class LevelGeneratorEditor : Editor {
 
 		if(GUILayout.Button("Full generation")) {
 			Generator.FullGeneration();
+			Generator.SpawnPlayer();
 		}
 
 		if(GUILayout.Button("Clean all")) {
