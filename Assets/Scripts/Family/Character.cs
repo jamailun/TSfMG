@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Character : IStateSerializable<CharacterState> {
 	
@@ -7,6 +9,10 @@ public class Character : IStateSerializable<CharacterState> {
 	public float LifeExpectancy { get; private set; }
 	public float Age { get; private set; }
 	public bool IsDead { get; private set; }
+
+	// stats !!
+
+	public List<Curse> curses;
 
 	public Character(CharacterState data) {
 		Name = data.name;
@@ -29,7 +35,8 @@ public class Character : IStateSerializable<CharacterState> {
 			name = Name,
 			age = Age,
 			lifeExpectancy = LifeExpectancy,
-			isMale = IsMale
+			isMale = IsMale,
+			curses = this.curses.Select(cs => cs.Serialize()).ToArray()
 			//TODO: add les trucs qui arriveront ensuite.
 		};
 	}

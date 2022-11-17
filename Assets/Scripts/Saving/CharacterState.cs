@@ -8,11 +8,14 @@ public struct CharacterState {
 	public bool isMale;
 	public float lifeExpectancy;
 	//TODO: appearance
-	//TODO: curses
+	public CurseState[] curses;
 	//TODO: stats
 	//TODO: courbe de potentiel
 
 	public static CharacterState Generate(LanguageNames names, bool isMale, float age = 1f, float lifeExpectancyModifier = 1f) {
+
+		// TODO générer les curses aléatoirement
+
 		return new CharacterState() {
 			name = names.Random(isMale),
 			isMale = isMale,

@@ -96,6 +96,14 @@ public class GlobalGameManager : MonoBehaviour {
 			return;
 		quitting = true;
 		//TODO: operation on quit : SAVING !!
+
+
+		Debug.Log("Quitting application...");
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit(0);
+#endif
 	}
 
 	private void OnApplicationQuit() {

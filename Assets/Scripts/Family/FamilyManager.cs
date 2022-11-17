@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 		
 	public static FamilyManager Instance { get; private set; }
+	public bool HaveFamily => FamilyGeneration > 0;
 
 	[SerializeField] private FamilyManagerUI ui_handler;
 	[SerializeField] private string _fileNamesPath = "Lang/names";
