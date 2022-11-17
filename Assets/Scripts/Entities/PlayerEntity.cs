@@ -16,7 +16,7 @@ public class PlayerEntity : ManaOwnerEntity {
 
 	// Data structures
 	private readonly SpellsSet spells = new();
-	private readonly StatisticsSet stats = new();
+	private StatisticsSet stats;
 	private PlayerEquipment equipment;
 
 	// References
@@ -30,14 +30,27 @@ public class PlayerEntity : ManaOwnerEntity {
 	public void LinkCharacter(Character character) {
 		if(Character == null) {
 			Character = character;
+			Character.onLevelUpEvent += OnLevelUp;
 			DontDestroyOnLoad(gameObject);
 		} else {
 			Debug.LogError("The Character reference in PlayerEntity have already been set.");
 		}
 	}
 
+	private void OnDestroy() {
+		if(Character != null)
+			Character.onLevelUpEvent -= OnLevelUp;
+	}
+
+	private void OnLevelUp(int newLevel) {
+		Debug.Log("yeay new level (" + newLevel + ")");
+		stats.RecalculatePlayerStats();
+	}
+
 	private void Start() {
 		_controller = GetComponent<TarodevController.PlayerController>();
+		// stats
+		stats = new(this);
 		// equipment
 		equipment = new(this);
 		equipment.onEquipmentChange += () => {

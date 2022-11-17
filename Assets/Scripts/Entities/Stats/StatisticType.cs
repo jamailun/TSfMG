@@ -8,6 +8,7 @@
 	ManaMax,
 	ManaOptimisation, // reduce mana cost
 	ManaPower, // augment spells damages
+	Damages, // base attack damages
 
 	// Extra
 	Destiny, // ~luck

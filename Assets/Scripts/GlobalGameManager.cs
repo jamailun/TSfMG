@@ -80,8 +80,6 @@ public class GlobalGameManager : MonoBehaviour {
 			Destroy(p.gameObject);
 
 		SceneManager.LoadScene(_sceneFamily_name);
-
-		//FamilyManager.Instance.RefreshDisplay();
 	}
 	public void GoToMainMenu() {
 		if(CurrentState == State.MainMenu) {

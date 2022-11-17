@@ -33,6 +33,7 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 		DontDestroyOnLoad(gameObject);
 	}
 
+	// Called by the FAmilyManagerUI on start and on destroy. Allows to dynamically handle the display.
 	public void SetDisplay(FamilyManagerUI uiDisplay) {
 		this._uiDisplay = uiDisplay;
 		if(uiDisplay)
