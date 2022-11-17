@@ -12,9 +12,15 @@ public struct CharacterState {
 	//TODO: stats
 	//TODO: courbe de potentiel
 
-	public static CharacterState Generate(LanguageNames names, bool isMale, float age = 1f, float lifeExpectancyModifier = 1f) {
+	public static CharacterState Generate(LanguageNames names, float age = -1f, float lifeExpectancyModifier = 1f) {
+		bool isMale = Random.value < 0.5f;
+		return GenerateWithSex(names, isMale, age, lifeExpectancyModifier);
+	}
+	public static CharacterState GenerateWithSex(LanguageNames names, bool isMale, float age = -1f, float lifeExpectancyModifier = 1f) {
 
 		// TODO générer les curses aléatoirement
+		if(age < 0f)
+			age = Random.Range(15f, 30f);
 
 		return new CharacterState() {
 			name = names.Random(isMale),
@@ -23,6 +29,5 @@ public struct CharacterState {
 			lifeExpectancy = lifeExpectancyModifier * Random.Range(50f, 65f)
 		};
 	}
-
 
 }

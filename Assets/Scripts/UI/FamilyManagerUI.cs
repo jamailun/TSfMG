@@ -14,16 +14,23 @@ public class FamilyManagerUI : MonoBehaviour {
 	[SerializeField] private Button leftPageButton;
 	[SerializeField] private Button rightPageButton;
 
-	private FamilyManager _familyManager;
-	private int MaxPage => _familyManager.FamilyCharacters.Count / charactersPerPage;
+	private int MaxPage => FamilyManager.Instance.FamilyCharacters.Count / charactersPerPage;
 	private int characterPage = 0;
 
+	private void Start() {
+		FamilyManager.Instance.SetDisplay(this);
+	}
+
 	// Called by the FamilyManager instance
-	public void InitializeDisplay(FamilyManager familyManager) {
-		this._familyManager = familyManager;
-		familyName_label.text = familyManager.FamilyName;
+	public void RefreshDisplay() {
+		familyName_label.text = FamilyManager.Instance.FamilyName;
 
 		RefreshCharactersDisplays();
+	}
+
+	private void OnDestroy() {
+		// remove ref from the manager
+		FamilyManager.Instance.SetDisplay(null);
 	}
 
 	// Called by nextPageButton
@@ -44,7 +51,7 @@ public class FamilyManagerUI : MonoBehaviour {
 
 	private void RefreshCharactersDisplays() {
 		charactersLayout.transform.DestroyChildren();
-		var chars = _familyManager.FamilyCharacters.Slice(charactersPerPage * characterPage, charactersPerPage);
+		var chars = FamilyManager.Instance.FamilyCharacters.Slice(charactersPerPage * characterPage, charactersPerPage);
 		foreach(var c in chars) {
 			var display = Instantiate(characterUiPrefab, charactersLayout.transform);
 			display.Init(c);
@@ -57,7 +64,7 @@ public class FamilyManagerUI : MonoBehaviour {
 	public void SelectedCharacter(Character character) {
 		foreach(var btn in GetComponentsInChildren<Button>())
 			btn.interactable = false;
-		_familyManager.UI_SelectedCharacter(character);
+		FamilyManager.Instance.UI_SelectedCharacter(character);
 	}
 
 }

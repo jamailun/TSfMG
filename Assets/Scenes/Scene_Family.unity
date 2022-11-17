@@ -483,10 +483,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 1
-  _sceneMainMenu: Scene_MainMenu
-  _sceneGame: Scene_Game
-  _sceneFamily: Scene_Family
-  _sceneLoading: Scene_Loading
+  _sceneMainMenu_name: Scene_MainMenu
+  _sceneGame_name: Scene_Game
+  _sceneFamily_name: Scene_Family
+  _sceneLoading_name: Scene_Loading
 --- !u!4 &504071349
 Transform:
   m_ObjectHideFlags: 0
@@ -1575,8 +1575,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abd575ba86a29941ab4d42760f2d18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui_handler: {fileID: 507117982}
   _fileNamesPath: Lang/names
+  newFamilyCharactersAmount: 5
+  _DEBUG: 1
 --- !u!4 &1573926105
 Transform:
   m_ObjectHideFlags: 0

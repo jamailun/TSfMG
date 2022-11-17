@@ -68,24 +68,33 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	public void GoToFamily() {
-		if(CurrentState != State.MainMenu || CurrentState != State.RunOver) {
+		if(CurrentState != State.MainMenu && CurrentState != State.RunOver) {
 			Debug.LogError("Cannot go to family a run if we are not at main menu OR after a run. Current state = " + CurrentState);
 			return;
 		}
+		CurrentState = State.FamilyManagement;
 
 		// I HOPE I DO NOT FAIT UNE BETISE xd
-		Destroy(GetPlayer());
+		var p = GetPlayer();
+		if(p)
+			Destroy(p.gameObject);
 
 		SceneManager.LoadScene(_sceneFamily_name);
+
+		//FamilyManager.Instance.RefreshDisplay();
 	}
 	public void GoToMainMenu() {
 		if(CurrentState == State.MainMenu) {
 			Debug.LogError("Cannot go to main menu from main menu...  Current state = " + CurrentState);
 			return;
 		}
+		CurrentState = State.MainMenu;
 
 		// I HOPE I DO NOT FAIT UNE BETISE xd
-		Destroy(GetPlayer());
+		var p = GetPlayer();
+		if(p)
+			Destroy(p.gameObject);
+		//TODO: stop run ??
 
 		SceneManager.LoadScene(_sceneMainMenu_name);
 	}

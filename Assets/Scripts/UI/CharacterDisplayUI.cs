@@ -20,6 +20,7 @@ public class CharacterDisplayUI : MonoBehaviour {
 		this.currentCharacter = character;
 		label_name.text = character.Name;
 		//TODO display
+		display.color = character.IsMale ? Color.cyan : Color.magenta;
 	}
 
 	public void SelectedCharacter() {

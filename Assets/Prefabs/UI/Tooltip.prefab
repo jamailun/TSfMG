@@ -407,7 +407,7 @@ MonoBehaviour:
   mainLabel: {fileID: 4768914157893480951}
   statsContainer: {fileID: 4768914157441002665}
   descriptionLabel: {fileID: 4768914156603359707}
-  mouseOffset: {x: 0, y: -40}
+  mouseOffset: {x: 0, y: -10}
   linePrefab: {fileID: 6451804149133061099, guid: 14ac2a7e3b93a9344b8834d36f46381b, type: 3}
 --- !u!114 &4768914158161751370
 MonoBehaviour:

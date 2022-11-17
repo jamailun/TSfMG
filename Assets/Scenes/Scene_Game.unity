@@ -1898,8 +1898,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abd575ba86a29941ab4d42760f2d18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui_handler: {fileID: 0}
   _fileNamesPath: Lang/names
+  newFamilyCharactersAmount: 5
+  _DEBUG: 1
 --- !u!4 &601679409
 Transform:
   m_ObjectHideFlags: 0
