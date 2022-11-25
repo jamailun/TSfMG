@@ -50,7 +50,7 @@ public class SimpleMonster : MonsterEntity {
 		Gizmos.DrawLine(RaycastOriginLatteral + new Vector3(0, (HalfSizeY-_deltaRayHorizontal)), RaycastOriginLatteral + new Vector3(0, HalfSizeY- _deltaRayHorizontal) + new Vector3(RaycastLengthX * _goingRight.ToMult(), 0));
 	}
 
-	private void Update() {
+	protected override void EntityUpdate() {
 		if(ShoudChangeDirection()) {
 			_goingRight = !_goingRight;
 			UpdateGoingRight();

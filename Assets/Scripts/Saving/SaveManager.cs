@@ -2,9 +2,8 @@
 using System.IO;
 using System;
 
-public class SaveManager : MonoBehaviour {
+public class SaveManager : SingletonBehaviour<SaveManager> {
 
-	public static SaveManager Instance { get; private set; }
 	public string FilePath => Path.Combine(Application.persistentDataPath, _fileName);
 	public GlobalSaveState SavedData => _saveState;
 
@@ -12,15 +11,6 @@ public class SaveManager : MonoBehaviour {
 
 	[SerializeField] private string _fileName = "save.json";
 	[SerializeField] private GlobalSaveState _saveState;
-
-	private void Awake() {
-		if(Instance) {
-			Destroy(gameObject);
-			return;
-		}
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-	}
 
 	public static GlobalSaveState CreateDefaultSaveState() {
 		long now = NOW;

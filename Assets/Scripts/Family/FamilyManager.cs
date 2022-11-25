@@ -2,9 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 
-public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
-		
-	public static FamilyManager Instance { get; private set; }
+public class FamilyManager : SingletonBehaviour<FamilyManager>, IStateSerializable<FamilyState> {
+	
 	public bool HaveFamily => FamilyGeneration > 0;
 
 	[SerializeField] private string _fileNamesPath = "Lang/names";
@@ -22,16 +21,6 @@ public class FamilyManager : MonoBehaviour, IStateSerializable<FamilyState> {
 	private FamilyManagerUI _uiDisplay;
 
 	private TextAsset NamesAsset => Resources.Load<TextAsset>(_fileNamesPath);
-
-	private void Awake() {
-		if(Instance) {
-			Destroy(gameObject);
-			return;
-		}
-		
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-	}
 
 	// Called by the FAmilyManagerUI on start and on destroy. Allows to dynamically handle the display.
 	public void SetDisplay(FamilyManagerUI uiDisplay) {

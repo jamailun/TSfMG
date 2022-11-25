@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InGameUI : MonoBehaviour {
+public class InGameUI : SingletonBehaviour<InGameUI> {
 
 	[Header("Windows configuration.")]
 	[SerializeField] private WindowsEntry[] windows = { };
@@ -10,22 +10,13 @@ public class InGameUI : MonoBehaviour {
 	[SerializeField] private BarUI _uiBarMana;
 
 	#region External hooks
-	public static InGameUI Instance { get; private set; }
 
 	public BarUI HealthBar => _uiBarHealth;
 	public BarUI ManaBar => _uiBarMana;
 
 	#endregion
 
-	private void Awake() {
-		// Ici on n'utilise PAS de 'donotdestroyonload'. On se gère que nous même.
-		if(Instance) {
-			Debug.LogWarning("They already is a InGameUI instance ('" + Instance.name + "') from '" + name + "'.");
-			gameObject.SetActive(false);
-			return;
-		}
-		Instance = this;
-	}
+	public override bool DontDestroyObjectOnLoad => false;
 
 	// on veut pouvoir remplacer l'instance.
 	private void OnDestroy() {

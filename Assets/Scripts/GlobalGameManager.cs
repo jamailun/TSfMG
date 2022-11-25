@@ -2,9 +2,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GlobalGameManager : MonoBehaviour {
+public class GlobalGameManager : SingletonBehaviour<GlobalGameManager> {
 		
-	public static GlobalGameManager Instance { get; private set; }
 	private GlobalSaveState save;
 
 	public State CurrentState { get; private set; }
@@ -33,17 +32,9 @@ public class GlobalGameManager : MonoBehaviour {
 		RunOver
 	}
 
-	private void Awake() {
-		if(Instance) {
-			Destroy(gameObject);
-			return;
-		}
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-		IsPlaying = true;
-	}
-
 	private void Start() {
+		IsPlaying = true;
+
 		Debug.Log("Game launched with state "+_startState+".");
 		CurrentState = _startState;
 		

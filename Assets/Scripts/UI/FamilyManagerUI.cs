@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using TMPro;
 
 public class FamilyManagerUI : MonoBehaviour {

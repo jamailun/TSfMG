@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
-
-	public static CameraFollow Instance { get; private set; }
+public class CameraFollow : SingletonBehaviour<CameraFollow> {
 
 	[Tooltip("The offset of the camera")]
 	[SerializeField] private Vector3 offset = new(0, 0, -10);
@@ -14,18 +12,7 @@ public class CameraFollow : MonoBehaviour {
 
 	public Transform Target { get; set; }
 
-	private void Awake() {
-		if(Instance) {
-			Debug.LogWarning("Cannot have multiple instances of CameraFollow.");
-			Destroy(gameObject);
-			return;
-		}
-		Instance = this;
-	}
-
-	private void OnDestroy() {
-		Instance = null;
-	}
+	public override bool DontDestroyObjectOnLoad => false;
 
 	void FixedUpdate() {
 		if(Target == null)
