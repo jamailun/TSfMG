@@ -32,7 +32,7 @@ public class SpellData : ScriptableObject {
 
 	#endregion
 
-	public IEnumerable Cast(PlayerEntity player) { // plus facile de rajouter des args ici
+	public IEnumerator Cast(PlayerEntity player) { // plus facile de rajouter des args ici
 
 		// real casting time
 		yield return new WaitForSeconds(castingTime);
@@ -40,12 +40,10 @@ public class SpellData : ScriptableObject {
 		// Spawn production
 		if(producedPrefab) {
 			var spell = Instantiate(producedPrefab);
-			if(player.IsFlipX) {
-				spell.SetFlipX();
-				spell.transform.position = player.GetSpellSource() - spell.LocalPosition;
-			} else {
-				spell.transform.position = player.GetSpellSource() - spell.LocalPosition;
-			}
+			// set 2D position
+			spell.transform.position = player.GetSpellSource() - spell.LocalPosition;
+			// set owner
+			spell.SetActive(player, player.IsFlipX);
 		}
 
 		// period after the spell

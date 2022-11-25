@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourcePosition: {fileID: 4668137796042933811}
   lifeDurationEnabled: 1
-  lifeDuration: 0.5
+  lifeDuration: 2
 --- !u!1 &8196426387469072694
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public class MonsterEntity : LivingEntity {
 
 	protected virtual void AfterInit() { }
 
+	protected override void EntityUpdate() {}
+
 	public override EntityType EntityType => EntityType.Monster;
 
 }

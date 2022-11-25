@@ -6,13 +6,14 @@ public abstract class LivingEntity : MonoBehaviour {
     public string Name => _name;
 
 
-    [SerializeField] protected float _maxHealth = 100f;
+    [SerializeField] private float _maxHealth = 100f;
     public float MaxHealth => _maxHealth;
     public float Health { get; private set; }
     public float HealthRatio => _maxHealth <= 0 ? 0f : Health / _maxHealth;
+    [SerializeField] protected float _healthRegen = 0f;
     [SerializeField] protected float _flatArmor = 0f;
     [SerializeField] private bool invincible;
-    [SerializeField] private BarUI bar;
+    [SerializeField] protected BarUI _healthBar;
 
     public abstract EntityType EntityType { get; }
     public bool IsPlayer => EntityType == EntityType.Player;
@@ -55,9 +56,29 @@ public abstract class LivingEntity : MonoBehaviour {
             _hurtbox = GetComponentInChildren<Hurtbox>();
     }
 
+	protected void Update() {
+        Heal(_healthRegen * Time.deltaTime, false);
+
+        // other
+        EntityUpdate();
+	}
+
+    protected abstract void EntityUpdate();
+
+    protected void SetMaxHealth(float amount) {
+        if(amount < 0)
+            amount = 0;
+        _maxHealth = amount;
+        if(Health > _maxHealth)
+            Health = _maxHealth;
+        if(_healthBar)
+            _healthBar.Init(0, amount, Health);
+    }
+
     public void SetFullHealth() {
         Health = _maxHealth;
 	}
+
     public float Damage(float damage) {
         // Damage reduction
         damage -= GetFlatArmor();
@@ -80,7 +101,7 @@ public abstract class LivingEntity : MonoBehaviour {
 
 
     public void Heal(float heal, bool showText = true) {
-        if(heal < 0 || IsDead)
+        if(heal <= 0 || Health >= MaxHealth || IsDead)
             return;
 
         // Heal effect
@@ -101,8 +122,8 @@ public abstract class LivingEntity : MonoBehaviour {
         if(show) {
             SpawnDamageText((delta > 0 ? "+" : "") + (Mathf.Abs(delta) < 1f ? "0" : "") + delta.ToString("#.##"), DamageText.GetTypeFromEntityType(EntityType, delta < 0));
         }
-        if(bar)
-            bar.SetValue(Health);
+        if(_healthBar)
+            _healthBar.SetValue(Health);
         HealthChanged(delta);
     }
 

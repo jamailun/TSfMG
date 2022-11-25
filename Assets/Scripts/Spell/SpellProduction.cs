@@ -24,4 +24,10 @@ public class SpellProduction : MonoBehaviour {
 			rdr.flipX = true;
 	}
 
+	public virtual void SetActive(PlayerEntity player, bool flipX) {
+		if(flipX)
+			SetFlipX();
+
+	}
+
 }

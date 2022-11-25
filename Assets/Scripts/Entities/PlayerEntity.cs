@@ -27,26 +27,6 @@ public class PlayerEntity : ManaOwnerEntity {
 	public bool IsMale => _isMale;
 	public Character Character { get; private set; }
 
-	public void LinkCharacter(Character character) {
-		if(Character == null) {
-			Character = character;
-			Character.onLevelUpEvent += OnLevelUp;
-			DontDestroyOnLoad(gameObject);
-		} else {
-			Debug.LogError("The Character reference in PlayerEntity have already been set.");
-		}
-	}
-
-	private void OnDestroy() {
-		if(Character != null)
-			Character.onLevelUpEvent -= OnLevelUp;
-	}
-
-	private void OnLevelUp(int newLevel) {
-		Debug.Log("yeay new level (" + newLevel + ")");
-		stats.RecalculatePlayerStats();
-	}
-
 	private void Start() {
 		_controller = GetComponent<TarodevController.PlayerController>();
 		// stats
@@ -58,15 +38,36 @@ public class PlayerEntity : ManaOwnerEntity {
 		};
 		// init spells
 		UpdateSpellDatas();
+		// Link to UI
+		_manaBar = InGameUI.Instance.ManaBar;
+		_healthBar = InGameUI.Instance.HealthBar;
+		_manaBar.Init(0, MaxMana, Mana);
+		_healthBar.Init(0, MaxHealth, Health);
 	}
 
+	#region External hooks methods
+	public override EntityType EntityType => EntityType.Player;
+
+	public void LinkCharacter(Character character) {
+		if(Character == null) {
+			Character = character;
+			Character.onLevelUpEvent += OnLevelUp;
+			DontDestroyOnLoad(gameObject);
+		} else {
+			Debug.LogError("The Character reference in PlayerEntity have already been set.");
+		}
+	}
 	public void UpdateSpellDatas() {
 		spells.UpdateSpell(0, spell_1);
 		spells.UpdateSpell(1, spell_2);
 		spells.UpdateSpell(2, spell_3);
 	}
 
-	private void Update() {
+	#endregion
+
+	protected override void EntityUpdate() {
+		base.EntityUpdate();
+
 		// update cooldown of spells
 		spells.UpdateTime();
 
@@ -80,8 +81,6 @@ public class PlayerEntity : ManaOwnerEntity {
 		}
 	}
 
-	public override EntityType EntityType => EntityType.Player;
-
 	public void RespawnAndDamage(float damages) {
 		Damage(damages);
 		transform.position = _controller.LastGroundedPosition;
@@ -89,12 +88,22 @@ public class PlayerEntity : ManaOwnerEntity {
 
 	public bool CastSpell(int index) {
 		var spell = spells.GetSpell(index);
-		Debug.Log("test " + index + ", => " + spell);
 		if(spell.CanCast(this)) {
 			spell.Cast(this);
 			return true;
 		}
 		return false;
+	}
+
+	private void OnLevelUp(int newLevel) {
+		Debug.Log("yeay new level (" + newLevel + ")");
+		stats.RecalculatePlayerStats();
+	}
+
+	private void OnDestroy() {
+		// unregister character events
+		if(Character != null)
+			Character.onLevelUpEvent -= OnLevelUp;
 	}
 
 	public Vector3 GetSpellSource() {

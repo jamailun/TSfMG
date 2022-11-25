@@ -40,7 +40,7 @@ public class SpellSlot {
 		player.UseMana(spellData.ManaCost);
 
 		Debug.Log("CAST SPELL " + spellData.Name);
-		spellData.Cast(player);
+		player.StartCoroutine(spellData.Cast(player));
 
 		return true;
 	}

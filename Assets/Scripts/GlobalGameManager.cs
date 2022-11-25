@@ -33,7 +33,6 @@ public class GlobalGameManager : MonoBehaviour {
 		RunOver
 	}
 
-
 	private void Awake() {
 		if(Instance) {
 			Destroy(gameObject);
@@ -117,16 +116,17 @@ public class GlobalGameManager : MonoBehaviour {
 		QuitApplication();
 	}
 
+	public PlayerEntity GetPlayer() {
+		//player should be in DoNotDestroyOnLoad objects
+		return FindObjectOfType<PlayerEntity>();
+	}
+
+	#region IEnumerators methods
 	private IEnumerator _DestroyAndLoad() {
 		var loading = SceneManager.LoadSceneAsync(_sceneLoading_name);
 		while(!loading.isDone) {
 			yield return null;
 		}
-	}
-
-	public PlayerEntity GetPlayer() {
-		//player should be in DoNotDestroyOnLoad objects
-		return FindObjectOfType<PlayerEntity>();
 	}
 
 	private IEnumerator _StartRun() {
@@ -160,7 +160,9 @@ public class GlobalGameManager : MonoBehaviour {
 		runStartedTime = UnityEngine.Time.time;
 		GetPlayer().LinkCharacter(runCharacterRef);
 	}
+	#endregion
 
+	#region Pause methods
 	public void Pause() {
 		IsPlaying = false;
 		UnityEngine.Time.timeScale = 0f;
@@ -170,5 +172,6 @@ public class GlobalGameManager : MonoBehaviour {
 		IsPlaying = true;
 		UnityEngine.Time.timeScale = 1f;
 	}
+	#endregion
 
 }

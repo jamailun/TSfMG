@@ -1,11 +1,37 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InGameUI : MonoBehaviour {
 
-	// singelton ??
-	// => pas de donotdestroyonload => il faut nullifier l'Instance lors du OnDestroy !
+	[Header("Windows configuration.")]
 	[SerializeField] private WindowsEntry[] windows = { };
+
+	[Header("UI configuration")]
+	[SerializeField] private BarUI _uiBarHealth;
+	[SerializeField] private BarUI _uiBarMana;
+
+	#region External hooks
+	public static InGameUI Instance { get; private set; }
+
+	public BarUI HealthBar => _uiBarHealth;
+	public BarUI ManaBar => _uiBarMana;
+
+	#endregion
+
+	private void Awake() {
+		// Ici on n'utilise PAS de 'donotdestroyonload'. On se gère que nous même.
+		if(Instance) {
+			Debug.LogWarning("They already is a InGameUI instance ('" + Instance.name + "') from '" + name + "'.");
+			gameObject.SetActive(false);
+			return;
+		}
+		Instance = this;
+	}
+
+	// on veut pouvoir remplacer l'instance.
+	private void OnDestroy() {
+		if(Instance == this)
+			Instance = null;
+	}
 
 	private void Update() {
 		// Toggle visibilities of some windows
