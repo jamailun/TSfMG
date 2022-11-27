@@ -51,7 +51,7 @@ public abstract class LivingEntity : MonoBehaviour {
         if(!_renderer)
             _renderer = GetComponentInChildren<SpriteRenderer>();
         if(!_renderer)
-            Debug.LogWarning("Player do NOT have any renderer !");
+            Debug.LogWarning("Entity \""+name+"\" does NOT have any renderer !");
         if(!_hurtbox)
             _hurtbox = GetComponentInChildren<Hurtbox>();
     }
