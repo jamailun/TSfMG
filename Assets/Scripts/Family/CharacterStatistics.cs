@@ -50,6 +50,8 @@ public class CharacterStatistics {
 
 		// Event
 		_char.onLevelUpEvent?.Invoke(newLevel);
+
+		await Task.Delay(1);
 	}
 
 
